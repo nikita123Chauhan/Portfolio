@@ -5,264 +5,347 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nikita's Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
         }
-        @keyframes slide {
-              0% { transform: translateX(-100%); }
-             100% { transform: translateX(100%); }
+        .skill-card:hover img {
+            transform: rotate(360deg) scale(1.1);
+            transition: all 0.5s ease;
         }
-        .animate-slide {
-             display: inline-block;
-             animation: slide 6s linear infinite;
-             white-space: nowrap;
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #2C7A7B }
+        }
+        .type-animation {
+            overflow: hidden;
+            border-right: .15em solid #2C7A7B;
+            white-space: nowrap;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+        }
+        .code-editor {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+        .code-line {
+            color: #9cdcfe;
+            margin: 4px 0;
+        }
+        .code-keyword {
+            color: #569cd6;
+        }
+        .code-function {
+            color: #dcdcaa;
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-gray-50">
 
     <!-- Navbar -->
-    <nav class="fixed top-0 left-0 w-full bg-indigo-900 text-white shadow-md z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#home" class="text-2xl font-bold tracking-tight">Nikita's Portfolio</a>
-            <ul class="flex space-x-6">
-                <li><a href="#about" class="hover:text-coral-300 transition-colors">About</a></li>
-                <li><a href="#skills" class="hover:text-coral-300 transition-colors">Skills</a></li>
-                <li><a href="#projects" class="hover:text-coral-300 transition-colors">Projects</a></li>
-                <li><a href="#experience" class="hover:text-coral-300 transition-colors">Experience</a></li>
-                <li><a href="#education" class="hover:text-coral-300 transition-colors">Education</a></li>
-                <li><a href="#contact" class="hover:text-coral-300 transition-colors">Contact</a></li>
+    <nav class="fixed top-0 w-full bg-teal-800 text-white z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex flex-wrap justify-between items-center">
+            <a href="#home" class="text-2xl font-bold">Nikita's Portfolio</a>
+            <button id="menu-btn" class="md:hidden">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="#about" class="hover:text-teal-200 transition">About</a></li>
+                <li><a href="#skills" class="hover:text-teal-200 transition">Skills</a></li>
+                <li><a href="#projects" class="hover:text-teal-200 transition">Projects</a></li>
+                <li><a href="#education" class="hover:text-teal-200 transition">Education</a></li>
+                <li><a href="#contact" class="hover:text-teal-200 transition">Contact</a></li>
             </ul>
         </div>
+        <div id="mobile-menu" class="hidden md:hidden w-full pb-4">
+            <a href="#about" class="block px-4 py-2 hover:bg-teal-700">About</a>
+            <a href="#skills" class="block px-4 py-2 hover:bg-teal-700">Skills</a>
+            <a href="#projects" class="block px-4 py-2 hover:bg-teal-700">Projects</a>
+            <a href="#education" class="block px-4 py-2 hover:bg-teal-700">Education</a>
+            <a href="#contact" class="block px-4 py-2 hover:bg-teal-700">Contact</a>
+        </div>
     </nav>
-
-<!-- About Section -->
-<section id="about" class="py-20 bg-white text-gray-900 min-h-screen flex items-center">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center px-6">
-        <!-- Image Section -->
-        <div class="w-full md:w-1/3 flex justify-center mb-8 md:mb-1000">
-            <img src="assets/niki.jpeg" alt="Nikita's Profile" 
-                 class="w-64 h-64 rounded-full shadow-xl object-cover transition-transform transform hover:scale-105">
+    <!-- About Section -->
+<section id="about" class="pt-32 pb-16 md:py-24 px-6 w-full bg-gradient-to-r from-teal-50 to-blue-50">
+    <div class="container mx-auto flex flex-col md:flex-row items-center gap-12">
+        <!-- Profile Image -->
+        <div class="md:w-1/2 flex justify-center">
+            <div class="relative">
+                <img src="assets/niki.jpeg" alt="Nikita" 
+                     class="w-64 h-64 md:w-80 md:h-80 rounded-full shadow-2xl border-4 border-teal-100 object-cover">
+                <!-- Animated Ring Around the Image -->
+                <div class="absolute inset-0 rounded-full border-4 border-teal-200 animate-ping"></div>
+            </div>
         </div>
-        <!-- Text Section -->
-        <div class="w-full md:w-2/3 text-center md:text-left space-y-4">
-            <!-- Running Text Effect -->
-            <h2 class="text-4xl font-bold text-indigo-900 overflow-hidden relative h-10">
-                <span class="inline-block animate-slide">
-                    I am a Frontend Developer!
+
+        <!-- About Content -->
+        <div class="md:w-1/2 text-center md:text-left">
+            <h1 class="text-4xl md:text-5xl font-bold text-teal-900 mb-6">
+                Hi! I'm Nikita <br>
+                <span class="text-3xl md:text-4xl bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
+                    Frontend Developer
                 </span>
-            </h2>
-            <!-- Subheading -->
-            <h3 class="text-xl font-semibold text-gray-800">Transforming Ideas into Interactive Web Experiences</h3>
-            <p class="text-lg text-gray-700">
-                Creating interactive and responsive web designs that delight users and enhance online experiences using
-                <span class="font-semibold text-indigo-900">HTML, CSS, JavaScript, and React.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-8">
+                I specialize in building responsive, user-friendly, and visually stunning web applications. 
+                With a strong foundation in modern web technologies, I bring ideas to life through clean, 
+                efficient, and scalable code.
             </p>
-            <!-- Animated Button -->
-            <a href="#projects" class="inline-block px-6 py-3 mt-4 text-white bg-indigo-600 rounded-full shadow-md 
-                      hover:bg-indigo-700 hover:shadow-lg transition-all duration-300">
-                View My Projects
-            </a>
-        </div>
-    </div>
-</section>
 
-   <!-- Skills Section -->
-<section id="skills" class="py-20 bg-gray-100 min-h-screen flex items-center">
-    <div class="max-w-7xl mx-auto text-center px-6">
-        <h2 class="text-4xl font-semibold mb-12 text-indigo-900">Skills</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
-            <!-- HTML5 Skill -->
-            <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                <img src="assets/html.png" alt="HTML5" class="w-24 h-24 mb-4 mx-auto">
-                <h3 class="font-semibold text-xl text-gray-800">HTML5</h3>
-            </div>
-            <!-- CSS3 Skill -->
-            <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                <img src="assets/css.png" alt="CSS3" class="w-24 h-24 mb-4 mx-auto">
-                <h3 class="font-semibold text-xl text-gray-800">CSS3</h3>
-            </div>
-            <!-- JavaScript Skill -->
-            <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                <img src="assets/js.png" alt="JavaScript" class="w-24 h-24 mb-4 mx-auto">
-                <h3 class="font-semibold text-xl text-gray-800">JavaScript</h3>
-            </div>
-            <!-- React Skill -->
-            <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                <img src="assets/react.jpeg" alt="React" class="w-24 h-24 mb-4 mx-auto">
-                <h3 class="font-semibold text-xl text-gray-800">React</h3>
-            </div>
-            <!-- Java Skill -->
-            <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                <img src="assets/java.png" alt="Java" class="w-24 h-24 mb-4 mx-auto">
-                <h3 class="font-semibold text-xl text-gray-800">Java</h3>
-            </div>
-            <!-- Python Skill -->
-            <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                <img src="assets/python.jpeg" alt="Python" class="w-24 h-24 mb-4 mx-auto">
-                <h3 class="font-semibold text-xl text-gray-800">Python</h3>
+            <!-- Buttons -->
+            <div class="flex space-x-4 justify-center md:justify-start">
+                <a href="#projects" 
+                   class="inline-block px-8 py-3 bg-teal-600 text-white rounded-full hover:bg-teal-700 transition 
+                          transform hover:scale-105 shadow-lg flex items-center">
+                    Explore My Work <i class="fas fa-arrow-down ml-2"></i>
+                </a>
+                <a href="https://drive.google.com/file/d/1mSp1kcvJmlRpEjdQtlD3vsWKw1cU7We0/view?usp=drive_link" download 
+                   class="inline-block px-8 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition 
+                          transform hover:scale-105 shadow-lg flex items-center">
+                    Download Resume <i class="fas fa-download ml-2"></i>
+                </a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Projects Section -->
-<section id="projects" class="py-20 bg-white min-h-screen flex items-center">
-    <div class="max-w-7xl mx-auto text-center px-6">
-        <h2 class="text-4xl font-semibold mb-8 text-indigo-900">My Projects</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-           
-            <!-- To Do List Project -->
-            <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                <img src="assets/todo.png" alt="Project 4" class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-xl font-semibold text-indigo-900">To-Do List</h3>
-                <p class="text-gray-600 mt-2">A task management web app that allows users to create and manage their to-do list.</p>
-                <a href="https://github.com/nikita123Chauhan/to-do-list" class="text-indigo-600 mt-4 block">View Project</a>
-            </div>
-            <!-- Quiz Application -->
-            <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                <img src="assets/quiz.jpeg" alt="Project 5" class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-xl font-semibold text-indigo-900">Quiz Application</h3>
-                <p class="text-gray-600 mt-2">An interactive quiz app that allows users to take quizzes and get immediate feedback.</p>
-                <a href="https://github.com/nikita123Chauhan/quiz-application" class="text-indigo-600 mt-4 block">View Project</a>
-            </div>
-            <!-- NikVoyage Website -->
-            <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                <img src="assets/nickVoyage.jpeg" alt="Project 6" class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-xl font-semibold text-indigo-900">NikVoyage Website</h3>
-                <p class="text-gray-600 mt-2">A travel and tourism website designed for booking and discovering amazing destinations.</p>
-                <a href="https://github.com/nikita123Chauhan/nikvoyage" class="text-indigo-600 mt-4 block">View Project</a>
-            </div>
-            <!-- Keylogger Capturing -->
-            <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                <img src="assets/keylogger.jpg" alt="Project 7" class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-xl font-semibold text-indigo-900">Keylogger Capturing</h3>
-                <p class="text-gray-600 mt-2">A tool for capturing keystrokes on a system to detect malicious activities.</p>
-                <a href="https://github.com/nikita123Chauhan/keylogger" class="text-indigo-600 mt-4 block">View Project</a>
-            </div>
-            <!-- WhatsApp Sentiment Analysis -->
-            <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                <img src="assets/sentiment.jpeg" alt="Project 8" class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-xl font-semibold text-indigo-900">WhatsApp Sentiment Analysis</h3>
-                <p class="text-gray-600 mt-2">A project that analyzes sentiments from WhatsApp messages using machine learning techniques.</p>
-                <a href="https://github.com/nikita123Chauhan/whatsapp-sentiment-analysis" class="text-indigo-600 mt-4 block">View Project</a>
-            </div>
-            <!-- Sudoku Game Solver -->
-            <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                <img src="assets/sudoku.jpg" alt="Project 9" class="w-full h-40 object-cover rounded-lg mb-4">
-                <h3 class="text-xl font-semibold text-indigo-900">Sudoku Game Solver</h3>
-                <p class="text-gray-600 mt-2">A solver for Sudoku puzzles that uses backtracking algorithms to find solutions.</p>
-                <a href="https://github.com/nikita123Chauhan/sudoku-game-solver" class="text-indigo-600 mt-4 block">View Project</a>
+    <!-- Skills Section -->
+    <section id="skills" class="py-16 bg-white w-full">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center text-teal-900 mb-12">Skills</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                <div class="skill-card p-6 flex flex-col items-center bg-gray-50 rounded-xl hover:bg-white hover:shadow-xl transition">
+                    <img src="assets/html.png" class="w-20 h-20 mb-4">
+                    <span class="font-semibold text-gray-700">HTML5</span>
+                </div>
+                <div class="skill-card p-6 flex flex-col items-center bg-gray-50 rounded-xl hover:bg-white hover:shadow-xl transition">
+                    <img src="assets/css.png" class="w-20 h-20 mb-4">
+                    <span class="font-semibold text-gray-700">CSS3</span>
+                </div>
+                <div class="skill-card p-6 flex flex-col items-center bg-gray-50 rounded-xl hover:bg-white hover:shadow-xl transition">
+                    <img src="assets/js.png" class="w-20 h-20 mb-4">
+                    <span class="font-semibold text-gray-700">JavaScript</span>
+                </div>
+                <div class="skill-card p-6 flex flex-col items-center bg-gray-50 rounded-xl hover:bg-white hover:shadow-xl transition">
+                    <img src="assets/react.jpeg" class="w-20 h-20 mb-4">
+                    <span class="font-semibold text-gray-700">React</span>
+                </div>
+                <div class="skill-card p-6 flex flex-col items-center bg-gray-50 rounded-xl hover:bg-white hover:shadow-xl transition">
+                    <img src="assets/java.png" class="w-20 h-20 mb-4">
+                    <span class="font-semibold text-gray-700">Java</span>
+                </div>
+                <div class="skill-card p-6 flex flex-col items-center bg-gray-50 rounded-xl hover:bg-white hover:shadow-xl transition">
+                    <img src="assets/python.jpeg" class="w-20 h-20 mb-4">
+                    <span class="font-semibold text-gray-700">Python</span>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 bg-indigo-50 w-full">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center text-indigo-900 mb-12">Featured Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8">
+                <!-- College ERP -->
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+                    <div class="relative">
+                        <img src="assets/erp.jpg" class="w-full h-48 object-cover">
+                        <div class="project-overlay absolute inset-0 bg-indigo-900 bg-opacity-80 opacity-0 transition flex items-center justify-center">
+                            <a href="https://github.com/your-repo" class="text-white px-6 py-2 border-2 border-white rounded-full hover:bg-white hover:text-indigo-900 transition">
+                                View Code <i class="fas fa-external-link-alt ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-indigo-900 mb-2">College ERP System</h3>
+                        <p class="text-gray-600">Comprehensive management system for educational institutions</p>
+                    </div>
+                </div>
 
+                <!-- NikVoyage -->
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+                    <div class="relative">
+                        <img src="assets/nickVoyage.jpeg" class="w-full h-48 object-cover">
+                        <div class="project-overlay absolute inset-0 bg-indigo-900 bg-opacity-80 opacity-0 transition flex items-center justify-center">
+                            <a href="https://nikita123chauhan.github.io/Fullstack_project/public/index.html" class="text-white px-6 py-2 border-2 border-white rounded-full hover:bg-white hover:text-indigo-900 transition">
+                                Try Live <i class="https://nikita123chauhan.github.io/Fullstack_project/public/index.html"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-indigo-900 mb-2">NikVoyage E-Commerce</h3>
+                        <p class="text-gray-600">Modern shopping platform with seamless user experience</p>
+                    </div>
+                </div>
 
-   <!-- Experience Section -->
-<section id="experience" class="py-20 bg-gray-50 min-h-screen flex items-center">
-    <div class="max-w-7xl mx-auto text-center px-6">
-        <h2 class="text-4xl font-semibold mb-8 text-indigo-900">Experience</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Internship at Coding Raja -->
-            <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                <h3 class="text-2xl font-semibold text-indigo-900 mb-4">Internship at Coding Raja</h3>
-                <p class="text-lg text-gray-700 mb-4">Worked on projects like Sentiment Analysis and Food Image Classification using Machine Learning.</p>
-                <p class="text-gray-600">Duration: May 2024 - June 2024</p>
-                <p class="text-gray-600 font-semibold mt-4">Technology: Machine Learning, Python</p>
-            </div>
-            <!-- Internship at IBM SkillsBuild -->
-            <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                <h3 class="text-2xl font-semibold text-indigo-900 mb-4">Internship at IBM SkillsBuild</h3>
-                <p class="text-lg text-gray-700 mb-4">Focused on Cyber Security tools and techniques, but did not use Wireshark.</p>
-                <p class="text-gray-600">Duration:  June 2023 - July 2023</p>
-                <p class="text-gray-600 font-semibold mt-4">Technology: Cyber Security</p>
-            </div>
-            <!-- Internship at AICTE SkillsBuild (Android Development) -->
-            <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                <h3 class="text-2xl font-semibold text-indigo-900 mb-4">Internship at AICTE SkillsBuild (Android Development)</h3>
-                <p class="text-lg text-gray-700 mb-4">Gained hands-on experience in Android development, working with Java and Kotlin to build functional mobile apps.</p>
-                <p class="text-gray-600">Duration: April 2024 - May 2024</p>
-                <p class="text-gray-600 font-semibold mt-4">Technology: Android Development, Java, Kotlin</p>
+                <!-- Quiz App -->
+                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+                    <div class="relative">
+                        <img src="assets/todo.png" class="w-full h-48 object-cover">
+                        <div class="project-overlay absolute inset-0 bg-indigo-900 bg-opacity-80 opacity-0 transition flex items-center justify-center">
+                            <a href="https://nikita123chauhan.github.io/MiniTodos-Applcation/frontend/index.html" class="text-white px-6 py-2 border-2 border-white rounded-full hover:bg-white hover:text-indigo-900 transition">
+                                Try Live <i class="https://nikita123chauhan.github.io/MiniTodos-Applcation/frontend/index.html"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-indigo-900 mb-2">Mini-To do Application</h3>
+                        <p class="text-gray-600">Build a simple and intuitive todo application to help users manage tasks efficiently</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
+    <!-- Education Section -->
+    <section id="education" class="py-16 bg-gray-50 w-full">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center text-teal-900 mb-12">Education & Credentials</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <!-- Education Card 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border-l-4 border-teal-600">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-teal-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-graduation-cap text-teal-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">B.Tech in Computer Science</h3>
+                    </div>
+                    <p class="text-gray-600 mb-2">Roorkee College of Engineering</p>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span>2021 - 2025</span>
+                        <span>CGPA: 8.02</span>
+                    </div>
+                </div>
 
-<!-- Education Section -->
-<section id="education" class="py-20 bg-white min-h-screen flex items-center">
-    <div class="max-w-7xl mx-auto text-center px-6">
-        <h2 class="text-4xl font-semibold mb-8 text-indigo-900">Education</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <!-- Frontend Course -->
-              <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                <h3 class="text-2xl font-semibold text-indigo-900 mb-3">Frontend Development Course</h3>
-                <p class="text-lg text-gray-700 mb-3">Masai School, 2024</p>
-                <p class="text-gray-600">Completed a comprehensive course in Frontend Development.</p>
+                <!-- Education Card 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border-l-4 border-blue-600">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-laptop-code text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Frontend Development</h3>
+                    </div>
+                    <p class="text-gray-600 mb-2">Masai School</p>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span>2024-25</span>
+                        <span>Intensive Program</span>
+                    </div>
+                </div>
+
+                <!-- Education Card 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border-l-4 border-purple-600">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-purple-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-school text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Senior Secondary</h3>
+                    </div>
+                    <p class="text-gray-600 mb-2">Shanti Memorial Public School</p>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span>2020 - 2021</span>
+                        <span>90.08%</span>
+                    </div>
+                </div>
+
+                <!-- Education Card 4 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border-l-4 border-green-600">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-green-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-certificate text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">10th Education</h3>
+                    </div>
+                    <p class="text-gray-600 mb-2">Shanti Memorial Public School</p>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <span>2018 - 2019</span>
+                        <span>84.33%</span>
+                    </div>
+                </div>
             </div>
-            <!-- B.Tech Education -->
-            <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                <h3 class="text-2xl font-semibold text-indigo-900 mb-3">B.Tech in Computer Science and Engineering</h3>
-                <p class="text-lg text-gray-700 mb-3">Roorkee College of Engineering, 2021 - 2025</p>
-                <p class="text-gray-600">CGPA: 8.02</p>
-            </div>
-            <!-- Senior Secondary Education -->
-            <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                <h3 class="text-2xl font-semibold text-indigo-900 mb-3">Senior Secondary</h3>
-                <p class="text-lg text-gray-700 mb-3">Shanti Memorial Public School, 2020 - 2021</p>
-                <p class="text-gray-600">Percentage: 90.08%</p>
-            </div>
-            <!-- 10th Education -->
-            <div class="bg-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                <h3 class="text-2xl font-semibold text-indigo-900 mb-3">10th Education</h3>
-                <p class="text-lg text-gray-700 mb-3">Shanti Memorial Public School, 2018 - 2019</p>
-                <p class="text-gray-600">Percentage: 84.33%</p>
-            </div>
-          
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Contact Me Section -->
-<section id="contact" class="py-20 bg-gray-50 min-h-screen flex items-center">
-    <div class="max-w-7xl mx-auto text-center px-6">
-        <h2 class="text-4xl font-semibold mb-8 text-indigo-900">Contact Me</h2>
-        <p class="text-xl text-gray-800 mb-6"><b>Feel free to reach out for any queries or collaborations. I'd love to hear from you!</b></p>
-        
-        <!-- Formspree Form -->
-        <form action="https://formspree.io/f/movjpwwe" method="POST" class="max-w-xl mx-auto">
-            <input type="text" name="name" placeholder="Your Name" class="w-full p-4 mb-4 rounded-lg border-2 border-gray-300 focus:border-indigo-500 focus:outline-none" required>
-            <input type="email" name="email" placeholder="Your Email" class="w-full p-4 mb-4 rounded-lg border-2 border-gray-300 focus:border-indigo-500 focus:outline-none" required>
-            <textarea name="message" placeholder="Your Message" rows="4" class="w-full p-4 mb-4 rounded-lg border-2 border-gray-300 focus:border-indigo-500 focus:outline-none" required></textarea>
-            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-lg transition-all duration-300">Send Message</button>
-        </form>
-    </div>
-</section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-white w-full">
+        <div class="container mx-auto px-6 max-w-2xl">
+            <h2 class="text-4xl font-bold text-center text-teal-900 mb-12">Let's Connect!</h2>
+            <form class="space-y-6">
+                <div>
+                    <input type="text" placeholder="Your Name" 
+                           class="w-full px-4 py-3 rounded-lg border-2 border-teal-100 focus:border-teal-500 outline-none">
+                </div>
+                <div>
+                    <input type="email" placeholder="Email Address" 
+                           class="w-full px-4 py-3 rounded-lg border-2 border-teal-100 focus:border-teal-500 outline-none">
+                </div>
+                <div>
+                    <textarea rows="5" placeholder="Your Message" 
+                           class="w-full px-4 py-3 rounded-lg border-2 border-teal-100 focus:border-teal-500 outline-none"></textarea>
+                </div>
+                <button class="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 transition 
+                              transform hover:scale-[1.02] shadow-md">
+                    Send Message <i class="fas fa-paper-plane ml-2"></i>
+                </button>
+            </form>
+        </div>
+    </section>
 
+    <!-- Footer -->
+    <footer class="bg-teal-800 text-white py-8 w-full">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="https://linkedin.com/in/yourprofile" target="_blank" 
+                   class="text-2xl hover:text-teal-300 transition">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/nikita123Chauhan" target="_blank" 
+                   class="text-2xl hover:text-teal-300 transition">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://leetcode.com/yourprofile" target="_blank" 
+                   class="text-2xl hover:text-teal-300 transition">
+                    <i class="fas fa-code"></i>
+                </a>
+            </div>
+            <p class="text-gray-300">
+                © 2024 Nikita Chauhan. All rights reserved.
+            </p>
+        </div>
+    </footer>
 
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
 
-
-<!-- Footer -->
-<footer class="bg-gray-800 text-white py-6 text-center">
-    <p>&copy; 2025 Nikita. All Rights Reserved.</p>
-    <div class="flex justify-center mt-4 space-x-6">
-        <a href="https://www.linkedin.com/in/your-linkedin-profile" target="_blank" class="hover:text-indigo-400 transition">
-            <i class="fab fa-linkedin text-2xl"></i>
-        </a>
-        <a href="https://github.com/your-github-profile" target="_blank" class="hover:text-indigo-400 transition">
-            <i class="fab fa-github text-2xl"></i>
-        </a>
-        <a href="https://leetcode.com/your-leetcode-profile" target="_blank" class="hover:text-indigo-400 transition">
-            <i class="fas fa-code text-2xl"></i>
-        </a>
-    </div>
-</footer>
-
-
-    <script src="js/main.js"></script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
+
+
+
